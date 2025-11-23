@@ -30,8 +30,8 @@ RUN npm ci --only=production
 # Copy built files from builder stage
 COPY --from=builder /app/dist ./dist
 
-# Copy public files (icons, etc.)
-COPY src/public ./dist/public
+# Copy public files (icons, etc.) from builder stage
+COPY --from=builder /app/src/public ./dist/public
 
 # Expose port (adjust if your app uses a different port)
 EXPOSE 5000
