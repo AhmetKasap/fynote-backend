@@ -23,7 +23,6 @@ WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
-COPY tsconfig.json ./
 
 # Install only production dependencies
 RUN npm ci --only=production
