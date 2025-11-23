@@ -9,17 +9,20 @@ const errorHandler = (
 ) => {
 	if (err instanceof ApiError) {
 		if (err.validationErrors) {
+			console.log("🔴 validationErrors", err.validationErrors)
 			return res.status(err.statusCode || 400).json({
 				success: false,
 				message: err.message,
 				validationErrors: err.validationErrors
 			})
 		}
+		console.log("🔴 ApiError", err)
 		return res.status(err.statusCode || 400).json({
 			success: false,
 			message: err.message
 		})
 	} else {
+		console.log("🔴 Internal Server Error", err)
 		return res.status(500).json({
 			success: false,
 			message: "Internal Server Error",
