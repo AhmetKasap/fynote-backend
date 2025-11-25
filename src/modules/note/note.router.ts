@@ -10,7 +10,7 @@ import { NoteController } from "./note.controller"
 @injectable()
 class NoteRouter implements IRouter {
 	router: Router = Router()
-	path = "/api/v1/notes"
+	path = "/api/v1/note"
 
 	constructor(
 		@inject(SERVICE_TYPES.NoteController)

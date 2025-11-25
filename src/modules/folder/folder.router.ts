@@ -10,7 +10,7 @@ import { FolderController } from "./folder.controller"
 @injectable()
 class FolderRouter implements IRouter {
 	router: Router = Router()
-	path = "/api/v1/folders"
+	path = "/api/v1/folder"
 
 	constructor(
 		@inject(SERVICE_TYPES.FolderController)
