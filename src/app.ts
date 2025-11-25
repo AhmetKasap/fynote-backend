@@ -9,6 +9,7 @@ import AppRouter from "./app-router"
 import errorHandler from "./middlewares/error.handler"
 import connectMongoDB from "./database/db.connection"
 import path from "path"
+import iconSeeder from "./database/icon.seeder"
 
 @injectable()
 class App {
@@ -36,7 +37,7 @@ class App {
 	async start() {
 		this.appRouter.run(this.app)
 		connectMongoDB(this.config.MONGODB_URL)
-		//iconSeeder()
+		iconSeeder()
 		this.httpServer.listen(this.config.PORT, () => {
 			console.log(`Server is running on port ${this.config.PORT}`)
 		})
