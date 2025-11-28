@@ -23,7 +23,11 @@ import { IconService } from "./modules/icon/icon.service"
 import { KafkaProducerService } from "./infrastructure/kafka-producer.service"
 import { KafkaConsumerService } from "./infrastructure/kafka-consumer.service"
 import { OpenAiService } from "./infrastructure/services/open-ai.service"
-import { SpeechToTextConsumerService } from "./infrastructure/consumers/speech-to-text.consumer.service"
+import { ProgramFromAudioConsumerService } from "./infrastructure/consumers/program-from-audio.consumer.service"
+import { ProgramFromTextConsumerService } from "./infrastructure/consumers/program-from-text.consumer.service"
+import { ProgramController } from "./modules/program/program.controller"
+import { ProgramService } from "./modules/program/program.service"
+import ProgramRouter from "./modules/program/program.router"
 
 const container = new Container()
 
@@ -51,6 +55,10 @@ container
 	.bind(SERVICE_TYPES.IconController)
 	.to(IconController)
 	.inSingletonScope()
+container
+	.bind(SERVICE_TYPES.ProgramController)
+	.to(ProgramController)
+	.inSingletonScope()
 
 //! Bindings - Services
 container.bind(SERVICE_TYPES.AuthService).to(AuthService).inSingletonScope()
@@ -64,6 +72,10 @@ container.bind(SERVICE_TYPES.NoteService).to(NoteService).inSingletonScope()
 container.bind(SERVICE_TYPES.IconService).to(IconService).inSingletonScope()
 container.bind(SERVICE_TYPES.MailService).to(MailService).inSingletonScope()
 container.bind(SERVICE_TYPES.OpenAiService).to(OpenAiService).inSingletonScope()
+container
+	.bind(SERVICE_TYPES.ProgramService)
+	.to(ProgramService)
+	.inSingletonScope()
 
 //! Bindings - Infrastructure (Kafka)
 container
@@ -77,8 +89,12 @@ container
 
 //! Bindings - Infrastructure (Kafka Consumers)
 container
-	.bind(SERVICE_TYPES.SpeechToTextConsumerService)
-	.to(SpeechToTextConsumerService)
+	.bind(SERVICE_TYPES.ProgramFromAudioConsumerService)
+	.to(ProgramFromAudioConsumerService)
+	.inSingletonScope()
+container
+	.bind(SERVICE_TYPES.ProgramFromTextConsumerService)
+	.to(ProgramFromTextConsumerService)
 	.inSingletonScope()
 
 //! Bindings - Routers
@@ -87,6 +103,7 @@ container.bind(SERVICE_TYPES.IRouter).to(UserProfileRouter).inSingletonScope()
 container.bind(SERVICE_TYPES.IRouter).to(FolderRouter).inSingletonScope()
 container.bind(SERVICE_TYPES.IRouter).to(NoteRouter).inSingletonScope()
 container.bind(SERVICE_TYPES.IRouter).to(IconRouter).inSingletonScope()
+container.bind(SERVICE_TYPES.IRouter).to(ProgramRouter).inSingletonScope()
 
 //! Bindings - App
 container.bind(SERVICE_TYPES.IAppRouter).to(AppRouter).inSingletonScope()

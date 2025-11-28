@@ -23,10 +23,6 @@ export class KafkaConsumerService {
 		this.consumer = this.kafka.consumer({
 			groupId: this.config.KAFKA_GROUP_ID
 		})
-
-		// Graceful shutdown sinyalleri
-		process.on("SIGINT", async () => await this.gracefulShutdown())
-		process.on("SIGTERM", async () => await this.gracefulShutdown())
 	}
 
 	/**
@@ -137,14 +133,5 @@ export class KafkaConsumerService {
 		} catch {
 			return false
 		}
-	}
-
-	/** Graceful Shutdown */
-	async gracefulShutdown() {
-		if (this.isConnected) {
-			await this.disconnect()
-			console.log("[Kafka Consumer] Gracefully shutdown")
-		}
-		process.exit(0)
 	}
 }

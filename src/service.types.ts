@@ -23,6 +23,10 @@ export const SERVICE_TYPES = {
 	SpeechController: Symbol("SpeechController"),
 	SpeechService: Symbol("SpeechService"),
 
+	//!Program Module
+	ProgramController: Symbol("ProgramController"),
+	ProgramService: Symbol("ProgramService"),
+
 	//!services
 	MailService: Symbol("MailService"),
 	IJwtService: Symbol("IJwtService"),
@@ -33,7 +37,8 @@ export const SERVICE_TYPES = {
 	KafkaConsumerService: Symbol("KafkaConsumerService"),
 
 	//!Infrastructure - Kafka Consumers
-	SpeechToTextConsumerService: Symbol("SpeechToTextConsumerService"),
+	ProgramFromAudioConsumerService: Symbol("ProgramFromAudioConsumerService"),
+	ProgramFromTextConsumerService: Symbol("ProgramFromTextConsumerService"),
 
 	//!Config
 	IConfig: Symbol("IConfig"),

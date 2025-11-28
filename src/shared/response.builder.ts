@@ -24,6 +24,10 @@ export default class ResponseBuilder {
 		return res.status(204).send()
 	}
 
+	static notFound(res: Response, message = "Not Found") {
+		return res.status(404).json({ success: false, message } as ApiResponse)
+	}
+
 	static fail(
 		res: Response,
 		message = "Bad Request",

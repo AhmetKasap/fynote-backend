@@ -76,13 +76,4 @@ export class KafkaProducerService {
 			return false
 		}
 	}
-
-	/** Graceful Shutdown */
-	async gracefulShutdown() {
-		if (this.isConnected) {
-			await this.disconnect()
-			console.log("Kafka Producer gracefully shutdown")
-		}
-		process.exit(0) //graceful shutdown
-	}
 }

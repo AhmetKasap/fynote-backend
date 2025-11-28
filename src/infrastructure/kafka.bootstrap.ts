@@ -2,8 +2,8 @@ import { container } from "@/inversify.config"
 import { SERVICE_TYPES } from "@/service.types"
 import { KafkaProducerService } from "./kafka-producer.service"
 import { KafkaConsumerService } from "./kafka-consumer.service"
-import { SpeechToTextConsumerService } from "./consumers/speech-to-text.consumer.service"
-// import { ExampleTextProcessorConsumerService } from "./consumers/example-text-processor.consumer.service"
+import { ProgramFromAudioConsumerService } from "./consumers/program-from-audio.consumer.service"
+import { ProgramFromTextConsumerService } from "./consumers/program-from-text.consumer.service"
 
 /**
  * Kafka Bootstrap Service
@@ -66,18 +66,19 @@ export class KafkaBootstrap {
 	private async registerConsumers(): Promise<void> {
 		console.log("[Kafka Bootstrap] Registering message handlers...")
 
-		// Speech to Text Consumer - Container'dan resolve et
-		const speechToTextConsumer = container.get<SpeechToTextConsumerService>(
-			SERVICE_TYPES.SpeechToTextConsumerService
-		)
-		this.consumer!.registerHandler(speechToTextConsumer)
+		// Program from Audio Consumer
+		const programFromAudioConsumer =
+			container.get<ProgramFromAudioConsumerService>(
+				SERVICE_TYPES.ProgramFromAudioConsumerService
+			)
+		this.consumer!.registerHandler(programFromAudioConsumer)
 
-		// Yeni consumer'larınızı buraya ekleyin
-		// 1. service.types.ts'e Symbol ekleyin
-		// 2. inversify.config.ts'de bind edin
-		// 3. Buraya ekleyin:
-		// const yourConsumer = container.get<YourConsumerService>(SERVICE_TYPES.YourConsumerService)
-		// this.consumer!.registerHandler(yourConsumer)
+		// Program from Text Consumer
+		const programFromTextConsumer =
+			container.get<ProgramFromTextConsumerService>(
+				SERVICE_TYPES.ProgramFromTextConsumerService
+			)
+		this.consumer!.registerHandler(programFromTextConsumer)
 
 		console.log("[Kafka Bootstrap] ✅ All message handlers registered")
 	}
