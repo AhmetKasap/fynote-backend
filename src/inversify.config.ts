@@ -20,6 +20,10 @@ import UserProfileService from "./modules/user-profile/user.profile.service"
 import { FolderService } from "./modules/folder/folder.service"
 import { NoteService } from "./modules/note/note.service"
 import { IconService } from "./modules/icon/icon.service"
+import { KafkaProducerService } from "./infrastructure/kafka-producer.service"
+import { KafkaConsumerService } from "./infrastructure/kafka-consumer.service"
+import { OpenAiService } from "./infrastructure/services/open-ai.service"
+import { SpeechToTextConsumerService } from "./infrastructure/consumers/speech-to-text.consumer.service"
 
 const container = new Container()
 
@@ -59,6 +63,23 @@ container.bind(SERVICE_TYPES.FolderService).to(FolderService).inSingletonScope()
 container.bind(SERVICE_TYPES.NoteService).to(NoteService).inSingletonScope()
 container.bind(SERVICE_TYPES.IconService).to(IconService).inSingletonScope()
 container.bind(SERVICE_TYPES.MailService).to(MailService).inSingletonScope()
+container.bind(SERVICE_TYPES.OpenAiService).to(OpenAiService).inSingletonScope()
+
+//! Bindings - Infrastructure (Kafka)
+container
+	.bind(SERVICE_TYPES.KafkaProducerService)
+	.to(KafkaProducerService)
+	.inSingletonScope()
+container
+	.bind(SERVICE_TYPES.KafkaConsumerService)
+	.to(KafkaConsumerService)
+	.inSingletonScope()
+
+//! Bindings - Infrastructure (Kafka Consumers)
+container
+	.bind(SERVICE_TYPES.SpeechToTextConsumerService)
+	.to(SpeechToTextConsumerService)
+	.inSingletonScope()
 
 //! Bindings - Routers
 container.bind(SERVICE_TYPES.IRouter).to(AuthRouter).inSingletonScope()

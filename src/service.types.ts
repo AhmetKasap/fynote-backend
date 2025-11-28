@@ -19,9 +19,21 @@ export const SERVICE_TYPES = {
 	IconController: Symbol("IconController"),
 	IconService: Symbol("IconService"),
 
+	//!Speech to Note Module
+	SpeechController: Symbol("SpeechController"),
+	SpeechService: Symbol("SpeechService"),
+
 	//!services
 	MailService: Symbol("MailService"),
 	IJwtService: Symbol("IJwtService"),
+	OpenAiService: Symbol("OpenAiService"),
+
+	//!Infrastructure - Kafka
+	KafkaProducerService: Symbol("KafkaProducerService"),
+	KafkaConsumerService: Symbol("KafkaConsumerService"),
+
+	//!Infrastructure - Kafka Consumers
+	SpeechToTextConsumerService: Symbol("SpeechToTextConsumerService"),
 
 	//!Config
 	IConfig: Symbol("IConfig"),

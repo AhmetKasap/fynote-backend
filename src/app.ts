@@ -10,6 +10,7 @@ import errorHandler from "./middlewares/error.handler"
 import connectMongoDB from "./database/db.connection"
 import path from "path"
 import iconSeeder from "./database/icon.seeder"
+import { bootstrapKafka, shutdownKafka } from "./infrastructure/kafka.bootstrap"
 
 @injectable()
 class App {
@@ -38,6 +39,27 @@ class App {
 		this.appRouter.run(this.app)
 		connectMongoDB(this.config.MONGODB_URL)
 		iconSeeder()
+
+		try {
+			await bootstrapKafka()
+			console.log(" Kafka services started successfully")
+		} catch (err) {
+			console.error("Failed to start Kafka services:", err)
+			throw new Error("Failed to start Kafka services")
+		}
+
+		process.on("SIGTERM", async () => {
+			console.log("SIGTERM received, shutting down gracefully...")
+			await shutdownKafka()
+			process.exit(0)
+		})
+
+		process.on("SIGINT", async () => {
+			console.log("SIGINT received, shutting down gracefully...")
+			await shutdownKafka()
+			process.exit(0)
+		})
+
 		this.httpServer.listen(this.config.PORT, () => {
 			console.log(`Server is running on port ${this.config.PORT}`)
 		})

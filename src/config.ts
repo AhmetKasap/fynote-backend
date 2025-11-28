@@ -14,6 +14,13 @@ export interface IConfig {
 	MAIL_PASSWORD: string
 	MAIL_FROM: string
 	MAIL_SECURE: boolean
+	OPENAI_API_KEY: string
+	OPEN_AI_CHAT_MODEL: string
+	OPEN_AI_SPEECH_MODEL: string
+	KAFKA_PRODUCER_CLIENT_ID: string
+	KAFKA_BROKERS: string
+	KAFKA_GROUP_ID: string
+	KAFKA_CONSUMER_CLIENT_ID: string
 }
 
 @injectable()
@@ -29,7 +36,13 @@ export class Config implements IConfig {
 	MAIL_PASSWORD: string
 	MAIL_FROM: string
 	MAIL_SECURE: boolean
-
+	OPENAI_API_KEY: string
+	OPEN_AI_CHAT_MODEL: string
+	OPEN_AI_SPEECH_MODEL: string
+	KAFKA_PRODUCER_CLIENT_ID: string
+	KAFKA_BROKERS: string
+	KAFKA_GROUP_ID: string
+	KAFKA_CONSUMER_CLIENT_ID: string
 	constructor() {
 		this.PORT = process.env["PORT"] as unknown as number
 		this.MONGODB_URL = process.env["MONGODB_URL"] as string
@@ -44,5 +57,16 @@ export class Config implements IConfig {
 		this.MAIL_PASSWORD = process.env["MAIL_PASSWORD"] as string
 		this.MAIL_FROM = process.env["MAIL_FROM"] as string
 		this.MAIL_SECURE = process.env["MAIL_SECURE"] === "true"
+		this.OPENAI_API_KEY = process.env["OPENAI_API_KEY"] as string
+		this.OPEN_AI_CHAT_MODEL = process.env["OPEN_AI_CHAT_MODEL"] as string
+		this.OPEN_AI_SPEECH_MODEL = process.env[
+			"OPEN_AI_SPEECH_MODEL"
+		] as string
+		this.KAFKA_PRODUCER_CLIENT_ID = process.env["KAFKA_CLIENT_ID"] as string
+		this.KAFKA_BROKERS = process.env["KAFKA_BROKERS"] as string
+		this.KAFKA_GROUP_ID = process.env["KAFKA_GROUP_ID"] as string
+		this.KAFKA_CONSUMER_CLIENT_ID = process.env[
+			"KAFKA_CONSUMER_CLIENT_ID"
+		] as string
 	}
 }

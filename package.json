@@ -20,8 +20,10 @@
 		"express": "^5.1.0",
 		"inversify": "^7.10.1",
 		"jose": "^6.1.0",
+		"kafkajs": "^2.2.4",
 		"mongoose": "^8.18.2",
 		"nodemailer": "^6.9.16",
+		"openai": "^6.9.1",
 		"sha256": "^0.2.0"
 	},
 	"devDependencies": {
