@@ -1,6 +1,5 @@
 import { IsNotEmpty, IsString } from "class-validator"
 
-//! INTERFACES
 export interface ICreateProgramFromText {
 	text: string
 }
@@ -15,7 +14,6 @@ export interface IProgramResponse {
 	status: "processing"
 }
 
-//! DTOs
 export class CreateProgramFromTextDto implements ICreateProgramFromText {
 	@IsNotEmpty({ message: "text is required" })
 	@IsString({ message: "Text must be a string" })

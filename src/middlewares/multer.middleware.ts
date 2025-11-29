@@ -3,10 +3,8 @@ import multer from "multer"
 import ApiError from "../shared/api.error"
 import IUserRequest from "../shared/user.request"
 
-// dosyayı memory storage'da buffer olarak al
 const storage = multer.memoryStorage()
 
-// İzin verilen ses dosyası MIME type'ları
 const mimeTypes = [
 	"audio/mpeg",
 	"audio/mp3",
@@ -18,7 +16,6 @@ const mimeTypes = [
 	"audio/aac"
 ]
 
-// multer config
 const upload = multer({
 	storage,
 	limits: {

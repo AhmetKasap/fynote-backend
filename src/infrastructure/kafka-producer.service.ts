@@ -21,13 +21,11 @@ export class KafkaProducerService {
 
 		this.producer = this.kafka.producer({
 			allowAutoTopicCreation: false,
-
-			// Retry mekanizması
 			retry: {
 				retries: 5,
-				initialRetryTime: 300, // ilk retry
-				maxRetryTime: 3000, // max limit
-				factor: 2 // exponential backoff
+				initialRetryTime: 300,
+				maxRetryTime: 3000,
+				factor: 2
 			}
 		})
 	}
@@ -37,9 +35,7 @@ export class KafkaProducerService {
 		try {
 			await this.producer.connect()
 			this.isConnected = true
-			console.log("Kafka Producer connected")
 		} catch (error) {
-			console.error("Kafka Producer connection failed:", error)
 			throw error
 		}
 	}
@@ -51,7 +47,6 @@ export class KafkaProducerService {
 			topic,
 			messages: [{ value: message }]
 		})
-		console.log(`Message sent to ${topic}`)
 	}
 
 	async disconnect() {
@@ -60,9 +55,8 @@ export class KafkaProducerService {
 		try {
 			await this.producer.disconnect()
 			this.isConnected = false
-			console.log("[Kafka Producer] Disconnected")
 		} catch (err) {
-			console.error("[Kafka Producer] Disconnect error:", err)
+			throw err
 		}
 	}
 

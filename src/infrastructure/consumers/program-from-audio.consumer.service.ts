@@ -31,10 +31,6 @@ export class ProgramFromAudioConsumerService implements IMessageHandler {
 			const transcribedText =
 				await this.openAiService.generateSpeechToText(audioBuffer)
 
-			console.log(
-				`[ProgramFromAudioConsumer] Transcribed text: ${transcribedText.substring(0, 100)}...`
-			)
-
 			const programContent =
 				await this.openAiService.generateProgramFromText(
 					transcribedText
@@ -50,10 +46,6 @@ export class ProgramFromAudioConsumerService implements IMessageHandler {
 				status: "completed",
 				updatedAt: new Date()
 			})
-
-			console.log(
-				`[ProgramFromAudioConsumer] Program completed: ${programId}`
-			)
 		} catch (err) {
 			console.error(
 				"[ProgramFromAudioConsumer] Error processing message:",

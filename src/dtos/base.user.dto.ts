@@ -1,7 +1,6 @@
 import { IsString } from "class-validator"
 import { IsNotEmpty } from "class-validator"
 
-//!INTERFACES
 export interface IUser {
 	id?: string
 	firstName?: string
@@ -14,7 +13,6 @@ export interface IUser {
 
 export interface IUserId extends Pick<IUser, "id"> {}
 
-//! DTOs
 export class UserIdDto implements IUserId {
 	@IsString()
 	@IsNotEmpty()

@@ -2,7 +2,6 @@ import { IsOptional, IsString, MinLength } from "class-validator"
 import { IsNotEmpty } from "class-validator"
 import { IsEmail } from "class-validator"
 
-//!INTERFACES
 export interface IUser {
 	id?: string
 	firstName?: string
@@ -24,8 +23,6 @@ export interface IVerifyEmail {
 export interface IResendVerificationEmail {
 	email: string
 }
-
-//! DTOs
 
 export class LoginDto implements ILogin {
 	@IsEmail()

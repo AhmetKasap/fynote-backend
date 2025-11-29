@@ -27,10 +27,6 @@ export class ProgramFromTextConsumerService implements IMessageHandler {
 			const data = JSON.parse(value)
 			const { programId, text } = data
 
-			console.log(
-				`[ProgramFromTextConsumer] Processing program: ${programId}`
-			)
-
 			const programContent =
 				await this.openAiService.generateProgramFromText(text)
 
@@ -43,10 +39,6 @@ export class ProgramFromTextConsumerService implements IMessageHandler {
 				status: "completed",
 				updatedAt: new Date()
 			})
-
-			console.log(
-				`[ProgramFromTextConsumer] Program completed: ${programId}`
-			)
 		} catch (err) {
 			console.error(
 				"[ProgramFromTextConsumer] Error processing message:",
