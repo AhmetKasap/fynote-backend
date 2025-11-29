@@ -19,7 +19,8 @@ const mimeTypes = [
 const upload = multer({
 	storage,
 	limits: {
-		fileSize: 20 * 1024 * 1024 // 20MB limit
+		// 5MB limit (base64 encoding ile ~9.3MB olur, Kafka 10MB limit içinde kalır)
+		fileSize: 5 * 1024 * 1024
 	},
 	fileFilter: (_req, file, cb) => {
 		if (!mimeTypes.includes(file.mimetype)) {
@@ -38,7 +39,7 @@ export default function audioUploadMiddleware(): RequestHandler {
 				if (err.code === "LIMIT_FILE_SIZE") {
 					return next(
 						ApiError.RequestEntityTooLarge(
-							"Dosya boyutu 20MB'dan büyük olamaz"
+							"Ses dosyası boyutu 7MB'dan büyük olamaz"
 						)
 					)
 				}

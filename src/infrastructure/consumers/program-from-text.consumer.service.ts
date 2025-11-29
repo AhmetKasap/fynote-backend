@@ -5,6 +5,7 @@ import { IMessageHandler } from "../interfaces/message-handler.interface"
 import { SERVICE_TYPES } from "@/service.types"
 import { OpenAiService } from "../services/open-ai.service"
 import { ProgramModel } from "@/database/models/program.model"
+import { IOpenApiResponse } from "@/dtos/open.api.dto"
 
 @injectable()
 export class ProgramFromTextConsumerService implements IMessageHandler {
@@ -23,37 +24,29 @@ export class ProgramFromTextConsumerService implements IMessageHandler {
 			return
 		}
 
-		try {
-			const data = JSON.parse(value)
-			const { programId, text } = data
+		let programId: string | null = null
 
-			const programContent =
-				await this.openAiService.generateProgramFromText(text)
+		const data = JSON.parse(value)
+		const { programId: id, text } = data
+		programId = id
 
-			const title =
-				text.substring(0, 50) + (text.length > 50 ? "..." : "")
+		if (!programId || !text) {
+			throw new Error("programId veya text eksik")
+		}
 
-			await ProgramModel.findByIdAndUpdate(programId, {
-				title,
-				content: programContent,
+		const programContent: IOpenApiResponse =
+			await this.openAiService.generateProgramFromText(text)
+
+		await ProgramModel.findByIdAndUpdate(
+			programId,
+			{
+				title: programContent.title,
+				content: programContent.content,
+				content_json: programContent.content_json,
 				status: "completed",
 				updatedAt: new Date()
-			})
-		} catch (err) {
-			console.error(
-				"[ProgramFromTextConsumer] Error processing message:",
-				err
-			)
-
-			if (value) {
-				const data = JSON.parse(value)
-				await ProgramModel.findByIdAndUpdate(data.programId, {
-					status: "failed",
-					updatedAt: new Date()
-				})
-			}
-
-			throw err
-		}
+			},
+			{ new: true }
+		)
 	}
 }
