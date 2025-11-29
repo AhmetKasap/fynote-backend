@@ -16,9 +16,8 @@ export class ProgramController {
 		req: IUserRequest,
 		res: Response
 	): Promise<Response> => {
-		const audio = req.body as Buffer
+		const audio = req.file?.buffer as Buffer
 		const userId = req.user!.id
-
 		const result = await this.programService.createProgramFromAudio(
 			audio,
 			userId

@@ -18,33 +18,16 @@ export class OpenAiService {
 	}
 
 	async generateSpeechToText(audio: Buffer): Promise<any> {
-		const base64str = audio.toString("base64")
-
-		const response = await this.openAi.chat.completions.create({
-			model: this.config.OPEN_AI_SPEECH_MODEL,
-			modalities: ["text", "audio"],
-			audio: { voice: "alloy", format: "wav" },
-
-			messages: [
-				{
-					role: "user",
-					content: [
-						{ type: "text", text: "What is in this recording?" },
-						{
-							type: "input_audio",
-							input_audio: {
-								data: base64str,
-								format: "mp3" // gönderdiğin ses mp3 ise wav yazma
-							}
-						}
-					]
-				}
-			],
-
-			store: false
+		const file = await OpenAI.toFile(audio, "audio.mp3", {
+			type: "audio/mpeg"
 		})
 
-		return response.choices[0]
+		const response = await this.openAi.audio.transcriptions.create({
+			model: this.config.OPEN_AI_SPEECH_MODEL,
+			file
+		})
+
+		return response.text
 	}
 
 	async generateText(prompt: string): Promise<string> {

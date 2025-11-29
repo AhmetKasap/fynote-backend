@@ -3,12 +3,10 @@ import { inject, injectable } from "inversify"
 import { type IRouter } from "@/shared/router.interface"
 import { SERVICE_TYPES } from "@/service.types"
 import validationMiddleware from "@/middlewares/validation.middleware"
-import {
-	CreateProgramFromTextDto,
-	CreateProgramFromAudioDto
-} from "./program.dto"
+import { CreateProgramFromTextDto } from "./program.dto"
 import { ProgramController } from "./program.controller"
 import authMiddleware from "@/middlewares/auth.middleware"
+import audioUploadMiddleware from "@/middlewares/multer.middleware"
 
 @injectable()
 class ProgramRouter implements IRouter {
@@ -24,7 +22,7 @@ class ProgramRouter implements IRouter {
 		this.router.post(
 			"/from-audio",
 			authMiddleware(),
-			validationMiddleware(CreateProgramFromAudioDto, "body"),
+			audioUploadMiddleware(),
 			this.programController.createFromAudio
 		)
 
